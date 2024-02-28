@@ -1,0 +1,24 @@
+#cloud-config
+ssh_pwauth: true
+groups:
+  - stream
+users:
+  - name: stream
+    gecos: "stream"
+    primary_group: stream
+    sudo: ALL=(ALL) NOPASSWD:ALL
+    ssh_authorized_keys: 
+      - ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIBrOblt31lj96vEylh7OduuoDkn4WAaO6xQ8YRA2vZBY brk@fed
+hostname: "${hostname}.${domain}"
+packages:
+  - python3-pip
+write_files:
+  - path: /tmp/bootstrap.sh
+    content: |
+      #!/bin/bash
+      set -eux
+      
+      curl -sfL https://get.k3s.io | INSTALL_K3S_EXEC="--disable traefik" sh -s -
+      install -o strim -g strim -m 0644 /etc/rancher/k3s/k3s.yaml /home/stream/kubeconfig
+runcmd:
+  - bash /tmp/bootstrap.sh
