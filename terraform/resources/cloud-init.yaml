@@ -19,6 +19,6 @@ write_files:
       set -eux
       
       curl -sfL https://get.k3s.io | INSTALL_K3S_EXEC="--disable traefik" sh -s -
-      install -o strim -g strim -m 0644 /etc/rancher/k3s/k3s.yaml /home/stream/kubeconfig
+      install -o stream -g stream -m 0644 /etc/rancher/k3s/k3s.yaml /home/stream/kubeconfig
 runcmd:
   - bash /tmp/bootstrap.sh
