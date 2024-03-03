@@ -51,6 +51,8 @@ resource "libvirt_domain" "centos-stream8" {
   network_interface {
     network_name   = "default"
     wait_for_lease = true
+    # Remove address entry to get one randomly assigned
+    addresses = ["192.168.124.100"]
   }
 
   disk {
