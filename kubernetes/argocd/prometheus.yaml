@@ -1,0 +1,24 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: prom
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
+spec:
+  project: default
+  sources: []
+  source:
+    repoURL: 'https://github.com/prometheus-community/helm-charts.git'
+    path: charts/prometheus
+    targetRevision: HEAD
+  destination:
+    name: ''
+    namespace: prometheus
+    server: 'https://kubernetes.default.svc'
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true
+
