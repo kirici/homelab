@@ -5,7 +5,7 @@ variable "vm_name" {
 
 variable "domain" {
   type    = string
-  default = "internal"
+  default = "local"
 }
 
 variable "memory" {
