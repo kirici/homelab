@@ -5,7 +5,7 @@ set -eu
 VM_IP="$(terraform -chdir=../terraform/infra/ output --raw ip)"
 
 echo "Waiting for kubeconfig to be available"
-until scp stream@"${VM_IP}":/home/stream/kubeconfig ~/.kube/config ;
+until scp stream@"${VM_IP}":/home/stream/kubeconfig ~/.kube/config &>/dev/null;
 do
   printf "."
   sleep 1
