@@ -12,3 +12,4 @@ do
 done
 
 sed -i "s/127.0.0.1/${VM_IP}/g" ~/.kube/config
+chmod 600 ~/.kube/config
