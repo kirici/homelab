@@ -1,0 +1,29 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: cn-postgres
+  namespace: argocd
+spec:
+  project: default
+  sources:
+  - repoURL: 'https://cloudnative-pg.github.io/charts'
+    chart: 'cloudnative-pg'
+    targetRevision: '0.20.2'
+    helm:
+      releaseName: 'cn-postgres'
+      valueFiles:
+      - $repo/argocd/values/cn-postgres.yaml
+  - repoURL: 'https://github.com/kirici/homelab.git'
+    targetRevision: 'master'
+    ref: 'repo'
+  destination:
+    namespace: cn-postgres
+    name: in-cluster
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+    - CreateNamespace=true
+    - ServerSideApply=true
+    - ApplyOutOfSyncOnly=true
