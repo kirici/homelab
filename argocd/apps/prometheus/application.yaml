@@ -11,7 +11,7 @@ spec:
     targetRevision: '58.2.1'
     helm:
       valueFiles:
-      - $root/kubernetes/argocd/apps/prometheus/values.yaml
+      - $root/argocd/apps/prometheus/values.yaml
   - repoURL: 'https://github.com/kirici/homelab.git'
     targetRevision: 'master'
     ref: 'root'
