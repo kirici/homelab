@@ -11,10 +11,10 @@ spec:
     targetRevision: '58.2.1'
     helm:
       valueFiles:
-      - $root/argocd/values/prometheus.yaml
+      - $repo/argocd/values/prometheus.yaml
   - repoURL: 'https://github.com/kirici/homelab.git'
     targetRevision: 'master'
-    ref: 'root'
+    ref: 'repo'
   destination:
     namespace: prometheus
     name: in-cluster
