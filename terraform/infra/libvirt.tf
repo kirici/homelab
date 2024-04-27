@@ -1,3 +1,9 @@
+variable "image_source" {
+  type = string
+  # default = "https://cloud.centos.org/centos/8-stream/x86_64/images/CentOS-Stream-GenericCloud-8-latest.x86_64.qcow2"
+  default = "../resources/CentOS-Stream-GenericCloud-8-latest.x86_64.qcow2"
+}
+
 variable "vm_name" {
   type    = string
   default = "strim"
@@ -18,6 +24,11 @@ variable "cpu" {
   default = 4
 }
 
+variable "disk_size" {
+  type    = number
+  default = 30 * 1024 * 1024 * 1024
+}
+
 data "template_file" "user_data" {
   template = file("${path.module}/../resources/cloud-init.yaml")
 
@@ -34,11 +45,18 @@ resource "libvirt_cloudinit_disk" "cloudinit" {
 }
 
 resource "libvirt_volume" "qcow_volume" {
-  name = "centos-stream8.qcow2"
-  pool = "default"
-  # source = "https://cloud.centos.org/centos/8-stream/x86_64/images/CentOS-Stream-GenericCloud-8-latest.x86_64.qcow2"
-  source = "../resources/CentOS-Stream-GenericCloud-8-latest.x86_64.qcow2"
+  name   = "centos-stream8-base.qcow2"
+  pool   = "default"
   format = "qcow2"
+  source = var.image_source
+}
+
+resource "libvirt_volume" "qcow_volume-resized" {
+  name           = "centos-stream8.qcow2"
+  pool           = "default"
+  format         = "qcow2"
+  base_volume_id = libvirt_volume.qcow_volume.id
+  size           = var.disk_size
 }
 
 resource "libvirt_domain" "centos-stream8" {
@@ -54,7 +72,7 @@ resource "libvirt_domain" "centos-stream8" {
   }
 
   disk {
-    volume_id = libvirt_volume.qcow_volume.id
+    volume_id = libvirt_volume.qcow_volume-resized.id
   }
 
   console {
