@@ -1,4 +1,7 @@
 #!/bin/bash
 set -eu
 
-kubectl apply --recursive -f ../argocd/apps
+# Global vars
+SCRIPTPATH="$(dirname "$(realpath "$0")")"
+
+kubectl apply --recursive -f "$(realpath "${SCRIPTPATH}"/../argocd/apps)"
