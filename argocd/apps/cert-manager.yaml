@@ -5,13 +5,18 @@ metadata:
   namespace: argocd
 spec:
   project: default
-  source:
-    repoURL: 'https://charts.jetstack.io'
+  sources:
+  - repoURL: 'https://charts.jetstack.io'
     targetRevision: '1.14.4'
     chart: 'cert-manager'
     helm:
       values: |
         installCRDs: true
+  - repoURL: 'https://github.com/kirici/homelab.git'
+    path: 'argocd/resources/certs'
+    targetRevision: 'master'
+    directory:
+      recurse: true
   destination:
     namespace: cert-manager
     name: in-cluster
