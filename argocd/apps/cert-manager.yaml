@@ -13,8 +13,8 @@ spec:
       values: |
         installCRDs: true
   - repoURL: 'https://github.com/kirici/homelab.git'
-    path: 'argocd/resources/certs'
     targetRevision: 'master'
+    path: 'argocd/resources/certs'
     directory:
       recurse: true
   destination:
@@ -25,6 +25,6 @@ spec:
       prune: true
       selfHeal: true
     syncOptions:
-      - CreateNamespace=true
-      - ServerSideApply=true
-      - ApplyOutOfSyncOnly=true
+    - CreateNamespace=true
+    - ServerSideApply=true
+    - ApplyOutOfSyncOnly=true

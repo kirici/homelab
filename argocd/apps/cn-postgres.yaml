@@ -7,8 +7,8 @@ spec:
   project: default
   sources:
   - repoURL: 'https://cloudnative-pg.github.io/charts'
-    chart: 'cloudnative-pg'
     targetRevision: '0.20.2'
+    chart: 'cloudnative-pg'
     helm:
       releaseName: 'cnpg'
       # valueFiles:
@@ -17,8 +17,8 @@ spec:
   #   targetRevision: 'master'
   #   ref: 'repo'
   - repoURL: 'https://github.com/kirici/homelab.git'
-    path: 'argocd/resources/cn-postgres'
     targetRevision: 'master'
+    path: 'argocd/resources/cn-postgres'
     directory:
       recurse: true
   destination:
