@@ -11,11 +11,6 @@ spec:
     chart: 'cloudnative-pg'
     helm:
       releaseName: 'cnpg'
-      # valueFiles:
-      #   - $repo/argocd/values/cn-postgres.yaml
-  # - repoURL: 'https://github.com/kirici/homelab.git'
-  #   targetRevision: 'master'
-  #   ref: 'repo'
   - repoURL: 'https://github.com/kirici/homelab.git'
     targetRevision: 'master'
     path: 'argocd/resources/cn-postgres'
