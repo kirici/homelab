@@ -1,7 +1,7 @@
 variable "image_source" {
   type = string
   # default = "https://cloud.centos.org/centos/8-stream/x86_64/images/CentOS-Stream-GenericCloud-8-latest.x86_64.qcow2"
-  default = "../resources/CentOS-Stream-GenericCloud-8-latest.x86_64.qcow2"
+  default = "../resources/AlmaLinux-9-GenericCloud-9.3-20231113.x86_64.qcow2"
 }
 
 variable "vm_name" {
@@ -66,6 +66,10 @@ resource "libvirt_domain" "centos-stream8" {
   cloudinit  = libvirt_cloudinit_disk.cloudinit.id
   qemu_agent = true
 
+  cpu {
+    mode = "host-passthrough"
+  }
+
   network_interface {
     network_name   = "default"
     wait_for_lease = true
@@ -76,12 +80,14 @@ resource "libvirt_domain" "centos-stream8" {
   }
 
   console {
+    # type        = "tty0"
     type        = "pty"
     target_type = "serial"
     target_port = "0"
   }
 
   graphics {
+    # type        = "vnc"
     type        = "spice"
     listen_type = "address"
     autoport    = true
