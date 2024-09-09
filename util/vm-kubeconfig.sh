@@ -7,7 +7,11 @@ TF_PATH=$(realpath "${SCRIPTPATH}"/../terraform/infra)
 VM_IP="$(terraform -chdir="${TF_PATH}" output --raw ip)"
 
 echo "Waiting for kubeconfig to be available"
-until scp user@"${VM_IP}":/home/user/kubeconfig ~/.kube/config &>/dev/null;
+until scp \
+  -o StrictHostKeyChecking=no \
+  -o UserKnownHostsFile=/dev/null \
+  -o "LogLevel ERROR" \
+  user@"${VM_IP}":/home/user/kubeconfig ~/.kube/config &>/dev/null;
 do
   printf "."
   sleep 1
