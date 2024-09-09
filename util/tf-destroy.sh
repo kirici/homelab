@@ -11,4 +11,4 @@ if [ "$id" != "0" ]; then
   exit
 fi
 
-terraform -chdir="${TF_PATH}" destroy -auto-approve
+terraform -chdir="${TF_PATH}" destroy -var-file=./example.tfvars -auto-approve
