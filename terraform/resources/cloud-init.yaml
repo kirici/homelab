@@ -1,11 +1,11 @@
 #cloud-config
 ssh_pwauth: true
 groups:
-  - stream
+  - user
 users:
   - name: user
     # gecos: "Coop R. Kneads"
-    # primary_group: user
+    primary_group: user
     sudo: ALL=(ALL) NOPASSWD:ALL
     ssh_authorized_keys: 
       - ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIBrOblt31lj96vEylh7OduuoDkn4WAaO6xQ8YRA2vZBY brk@fed
@@ -18,6 +18,6 @@ write_files:
       #!/bin/bash
       set -eux
       curl -sfL https://get.k3s.io | INSTALL_K3S_VERSION=v1.28.9+k3s1 INSTALL_K3S_EXEC="--disable traefik" sh -s -
-      install -o stream -g stream -m 0644 /etc/rancher/k3s/k3s.yaml /home/stream/kubeconfig
+      install -o user -g user -m 0644 /etc/rancher/k3s/k3s.yaml /home/user/kubeconfig
 runcmd:
   - bash /tmp/bootstrap.sh

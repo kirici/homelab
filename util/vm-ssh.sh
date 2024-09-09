@@ -5,11 +5,11 @@ set -eu
 SCRIPTPATH="$(dirname "$(realpath "$0")")"
 TF_PATH=$(realpath "${SCRIPTPATH}"/../terraform/infra)
 
-sudo terraform -chdir="${TF_PATH}" refresh &>/dev/null
+sudo terraform -chdir="${TF_PATH}" refresh -var-file=./example.tfvars &>/dev/null
 
 VM_IP="$(terraform -chdir="${TF_PATH}" output --raw ip)"
 ssh \
   -o StrictHostKeyChecking=no \
   -o UserKnownHostsFile=/dev/null \
   -o "LogLevel ERROR" \
-  stream@"${VM_IP}"
+  user@"${VM_IP}"
