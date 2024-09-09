@@ -1,7 +1,6 @@
 variable "image_source" {
-  type = string
-  # default = "https://cloud.centos.org/centos/9-stream/x86_64/images/CentOS-Stream-GenericCloud-9-latest.x86_64.qcow2"
-  default = "../resources/CentOS-Stream-GenericCloud-9-latest.x86_64.qcow2"
+  type    = string
+  default = "https://cloud.centos.org/centos/9-stream/x86_64/images/CentOS-Stream-GenericCloud-9-latest.x86_64.qcow2"
 }
 
 variable "vm_name" {
@@ -21,7 +20,7 @@ variable "memory" {
 
 variable "cpu" {
   type    = number
-  default = 4
+  default = 2
 }
 
 variable "disk_size" {
