@@ -3,9 +3,9 @@ ssh_pwauth: true
 groups:
   - stream
 users:
-  - name: stream
-    gecos: "stream"
-    primary_group: stream
+  - name: user
+    # gecos: "Coop R. Kneads"
+    # primary_group: user
     sudo: ALL=(ALL) NOPASSWD:ALL
     ssh_authorized_keys: 
       - ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIBrOblt31lj96vEylh7OduuoDkn4WAaO6xQ8YRA2vZBY brk@fed

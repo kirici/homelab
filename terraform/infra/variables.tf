@@ -6,7 +6,7 @@ variable "image_source" {
 
 variable "vm_name" {
   type    = string
-  default = "strim"
+  default = "node"
 }
 
 variable "domain" {
