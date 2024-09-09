@@ -13,22 +13,22 @@ resource "libvirt_cloudinit_disk" "cloudinit" {
   pool      = "default"
 }
 
-resource "libvirt_volume" "qcow_volume" {
-  name   = "centos-stream8-base.qcow2"
+resource "libvirt_volume" "base_volume" {
+  name   = "base_image.qcow2"
   pool   = "default"
   format = "qcow2"
   source = var.image_source
 }
 
-resource "libvirt_volume" "qcow_volume-resized" {
-  name           = "centos-stream8.qcow2"
+resource "libvirt_volume" "domain_volume" {
+  name           = "node_volumes.qcow2"
+  base_volume_id = libvirt_volume.base_volume.id
   pool           = "default"
   format         = "qcow2"
-  base_volume_id = libvirt_volume.qcow_volume.id
   size           = var.disk_size
 }
 
-resource "libvirt_domain" "centos-stream8" {
+resource "libvirt_domain" "node" {
   name       = var.vm_name
   memory     = var.memory
   vcpu       = var.cpu
@@ -45,7 +45,7 @@ resource "libvirt_domain" "centos-stream8" {
   }
 
   disk {
-    volume_id = libvirt_volume.qcow_volume-resized.id
+    volume_id = libvirt_volume.domain_volume.id
   }
 
   console {
@@ -64,5 +64,5 @@ resource "libvirt_domain" "centos-stream8" {
 }
 
 output "ip" {
-  value = libvirt_domain.centos-stream8.network_interface[0].addresses[0]
+  value = libvirt_domain.node.network_interface[0].addresses[0]
 }
