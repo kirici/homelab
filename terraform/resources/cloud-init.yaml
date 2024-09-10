@@ -17,7 +17,9 @@ write_files:
     content: |
       #!/bin/bash
       set -eux
-      curl -sfL https://get.k3s.io | INSTALL_K3S_VERSION=v1.28.9+k3s1 INSTALL_K3S_EXEC="--disable traefik" sh -s -
-      install -o user -g user -m 0644 /etc/rancher/k3s/k3s.yaml /home/user/kubeconfig
+      curl -sfL https://get.rke2.io | sh -
+      systemctl enable --now rke2-server.service
+      install -o user -g user -m 0644 /etc/rancher/rke2/rke2.yaml /home/user/kubeconfig
+      echo 'PATH=$PATH:/var/lib/rancher/rke2/bin/' > /etc/profile.d/path-rke2.sh
 runcmd:
   - bash /tmp/bootstrap.sh
