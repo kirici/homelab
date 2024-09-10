@@ -4,9 +4,11 @@ set -eu
 # Global vars
 SCRIPTPATH="$(dirname "$(realpath "$0")")"
 TF_PATH=$(realpath "${SCRIPTPATH}"/../terraform/infra)
-VM_IP="$(terraform -chdir="${TF_PATH}" output --raw ip)"
+
+sudo terraform -chdir="${TF_PATH}" refresh -var-file=./example.tfvars &>/dev/null
 
 echo "Waiting for kubeconfig to be available"
+VM_IP="$(terraform -chdir="${TF_PATH}" output --raw ip)"
 until scp \
   -o StrictHostKeyChecking=no \
   -o UserKnownHostsFile=/dev/null \
