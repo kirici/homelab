@@ -9,9 +9,9 @@ i=0
 SCRIPTPATH="$(dirname "$(realpath "$0")")"
 TF_PATH=$(realpath "${SCRIPTPATH}"/../terraform/infra)
 
-sudo terraform -chdir="${TF_PATH}" refresh -var-file=./example.tfvars &>/dev/null
+sudo tofu -chdir="${TF_PATH}" refresh -var-file=./example.tfvars &>/dev/null
 
-VM_IP="$(terraform -chdir="${TF_PATH}" output --raw ip)"
+VM_IP="$(tofu -chdir="${TF_PATH}" output --raw ip)"
 until scp \
   -o StrictHostKeyChecking=no \
   -o UserKnownHostsFile=/dev/null \

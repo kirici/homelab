@@ -11,7 +11,7 @@ if [ "$id" != "0" ]; then
   exit
 fi
 
-terraform \
+tofu \
   -chdir="${TF_PATH}" \
   apply \
   -var-file=./example.tfvars \
