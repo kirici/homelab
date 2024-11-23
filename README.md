@@ -18,4 +18,4 @@ Docker is installed. Edit `/etc/libvirt/network.conf` and set:
 ```ini
 firewall_backend = "iptables"
 ```
-to fix this, or replace Docker with Podman.
+to fix this, or replace Docker with Podman. See [here for more infos](https://bbs.archlinux.org/viewtopic.php?pid=2178694#p2178694).
