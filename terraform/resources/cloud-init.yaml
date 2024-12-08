@@ -9,7 +9,8 @@ users:
     sudo: ALL=(ALL) NOPASSWD:ALL
     ssh_authorized_keys: 
       - ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIBrOblt31lj96vEylh7OduuoDkn4WAaO6xQ8YRA2vZBY brk@fed
-hostname: "${hostname}.${domain}"
+hostname: "${hostname}"
+fqdn: ${hostname}.${domain}"
 packages:
   - python3-pip
 write_files:

@@ -27,3 +27,8 @@ variable "disk_size" {
   type    = number
   default = 30 * 1024 * 1024 * 1024
 }
+
+variable "node_count" {
+  type    = number
+  default = 1
+}

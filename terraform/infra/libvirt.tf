@@ -1,15 +1,19 @@
 data "template_file" "user_data" {
+  for_each = toset(local.hostnames)
+
   template = file("${path.module}/../resources/cloud-init.yaml")
 
   vars = {
-    hostname = var.vm_name
+    hostname = each.value
     domain   = var.domain
   }
 }
 
 resource "libvirt_cloudinit_disk" "cloudinit" {
-  name      = "commoninit.iso"
-  user_data = data.template_file.user_data.rendered
+  for_each = toset(local.hostnames)
+
+  name      = "cloudinit-${each.key}.iso"
+  user_data = data.template_file.user_data[each.key].rendered
   pool      = "default"
 }
 
@@ -21,7 +25,9 @@ resource "libvirt_volume" "base_volume" {
 }
 
 resource "libvirt_volume" "domain_volume" {
-  name           = "node_volumes.qcow2"
+  for_each = toset(local.hostnames)
+
+  name   = "${each.value}_volume.qcow2"
   base_volume_id = libvirt_volume.base_volume.id
   pool           = "default"
   format         = "qcow2"
@@ -29,10 +35,12 @@ resource "libvirt_volume" "domain_volume" {
 }
 
 resource "libvirt_domain" "node" {
-  name       = var.vm_name
+  for_each = toset(local.hostnames)
+
+  name       = each.value
   memory     = var.memory
   vcpu       = var.cpu
-  cloudinit  = libvirt_cloudinit_disk.cloudinit.id
+  cloudinit  = libvirt_cloudinit_disk.cloudinit[each.key].id
   qemu_agent = true
 
   cpu {
@@ -45,7 +53,7 @@ resource "libvirt_domain" "node" {
   }
 
   disk {
-    volume_id = libvirt_volume.domain_volume.id
+    volume_id = libvirt_volume.domain_volume[each.key].id
   }
 
   console {
@@ -63,6 +71,6 @@ resource "libvirt_domain" "node" {
   }
 }
 
-output "ip" {
-  value = libvirt_domain.node.network_interface[0].addresses[0]
+output "ips" {
+  value = { for k, v in libvirt_domain.node : k => v.network_interface[0].addresses[0] }
 }
