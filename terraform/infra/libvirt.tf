@@ -17,6 +17,20 @@ resource "libvirt_cloudinit_disk" "cloudinit" {
   pool      = "default"
 }
 
+resource "libvirt_network" "kubenet" {
+  name = var.domain
+  mode = "nat"
+  domain =var.domain
+  addresses = ["10.10.10.0/24"]
+  dhcp {
+    enabled = false
+  }
+  dns {
+    enabled = true
+    local_only = false
+  }
+}
+
 resource "libvirt_volume" "base_volume" {
   name   = "base_image.qcow2"
   pool   = "default"
@@ -71,6 +85,10 @@ resource "libvirt_domain" "node" {
   }
 }
 
-output "ips" {
-  value = { for k, v in libvirt_domain.node : k => v.network_interface[0].addresses[0] }
+# output "ips" {
+#   value = { for k, v in libvirt_domain.node : k => v.network_interface[0].addresses[0] }
+# }
+
+output "ip" {
+  value = libvirt_domain.node[element(keys(libvirt_domain.node), 0)].network_interface[0].addresses[0]
 }
