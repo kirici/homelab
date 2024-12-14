@@ -1,11 +1,11 @@
 #cloud-config
 ssh_pwauth: true
 groups:
-  - user
+  - captain
 users:
-  - name: user
+  - name: captain
     # gecos: "Coop R. Kneads"
-    primary_group: user
+    primary_group: captain
     sudo: ALL=(ALL) NOPASSWD:ALL
     ssh_authorized_keys: 
       - ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIBrOblt31lj96vEylh7OduuoDkn4WAaO6xQ8YRA2vZBY brk@fed
@@ -21,7 +21,7 @@ write_files:
       curl -sfL https://get.rke2.io | sh -
       sed -i 's|ExecStart=/usr/bin/rke2 server|ExecStart=/usr/bin/rke2 server --cni cilium|' /usr/lib/systemd/system/rke2-server.service
       systemctl enable --now rke2-server.service
-      install -o user -g user -m 0644 /etc/rancher/rke2/rke2.yaml /home/user/kubeconfig
+      install -o captain -g captain -m 0644 /etc/rancher/rke2/rke2.yaml /home/captain/kubeconfig
       echo 'PATH=$PATH:/var/lib/rancher/rke2/bin/' > /etc/profile.d/path-rke2.sh
 runcmd:
   - bash /tmp/bootstrap.sh

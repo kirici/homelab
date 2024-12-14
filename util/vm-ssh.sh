@@ -12,4 +12,4 @@ ssh \
   -o StrictHostKeyChecking=no \
   -o UserKnownHostsFile=/dev/null \
   -o "LogLevel ERROR" \
-  user@"${VM_IP}"
+  captain@"${VM_IP}"
