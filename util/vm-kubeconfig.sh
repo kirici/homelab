@@ -16,7 +16,7 @@ until scp \
   -o StrictHostKeyChecking=no \
   -o UserKnownHostsFile=/dev/null \
   -o "LogLevel ERROR" \
-  captain@"${VM_IP}":/home/user/kubeconfig ~/.kube/config &>/dev/null;
+  captain@"${VM_IP}":/home/captain/kubeconfig ~/.kube/config &>/dev/null;
 do
   i=$(( (i-1) %8 ))
   printf "\rWaiting for kubeconfig to be available ${spin:$i:1}"
