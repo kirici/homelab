@@ -153,7 +153,8 @@ data:
   # CSI_NFS_PLUGIN_UPDATE_STRATEGY: "OnDelete"
 
   # kubelet directory path, if kubelet configured to use other than /var/lib/kubelet path.
-  # ROOK_CSI_KUBELET_DIR_PATH: "/var/lib/kubelet"
+  # See https://docs.k0sproject.io/v1.21.1+k0s.0/examples/rook-ceph/#6-deploy-rook
+  ROOK_CSI_KUBELET_DIR_PATH: "/var/lib/k0s/kubelet"
 
   # Labels to add to the CSI CephFS Deployments and DaemonSets Pods.
   # ROOK_CSI_CEPHFS_POD_LABELS: "key1=value1,key2=value2"
