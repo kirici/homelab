@@ -1,3 +1,9 @@
+# Template start
+.sshDefault: &sshDefault
+  user: root
+  port: 22
+  keyPath: null
+# Template end
 apiVersion: k0sctl.k0sproject.io/v1beta1
 kind: Cluster
 metadata:
@@ -6,22 +12,16 @@ metadata:
 spec:
   hosts:
   - ssh:
+      <<: *sshDefault
       address: 10.0.0.1
-      user: root
-      port: 22
-      keyPath: null
     role: controller
   - ssh:
+      <<: *sshDefault
       address: 10.0.0.2
-      user: root
-      port: 22
-      keyPath: null
     role: worker
   - ssh:
+      <<: *sshDefault
       address: 10.0.0.3
-      user: root
-      port: 22
-      keyPath: null
     role: worker
   options:
     wait:
