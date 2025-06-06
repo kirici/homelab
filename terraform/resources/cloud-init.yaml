@@ -16,12 +16,14 @@ packages:
 write_files:
   - path: /tmp/bootstrap.sh
     content: |
-      #!/bin/bash
-      set -eux
-      curl -sfL https://get.rke2.io | sh -
-      sed -i 's|ExecStart=/usr/bin/rke2 server|ExecStart=/usr/bin/rke2 server --cni cilium|' /usr/lib/systemd/system/rke2-server.service
-      systemctl enable --now rke2-server.service
-      install -o captain -g captain -m 0644 /etc/rancher/rke2/rke2.yaml /home/captain/kubeconfig
-      echo 'PATH=$PATH:/var/lib/rancher/rke2/bin/' > /etc/profile.d/path-rke2.sh
+      # #!/bin/bash
+      # set -eux
+      # curl -sfL https://get.rke2.io | sh -
+      # sed -i 's|ExecStart=/usr/bin/rke2 server|ExecStart=/usr/bin/rke2 server --cni cilium|' /usr/lib/systemd/system/rke2-server.service
+      # systemctl enable --now rke2-server.service
+      # install -o captain -g captain -m 0644 /etc/rancher/rke2/rke2.yaml /home/captain/kubeconfig
+      # echo 'PATH=$PATH:/var/lib/rancher/rke2/bin/' > /etc/profile.d/path-rke2.sh
+      dnf update -y
+      systemctl reboot
 runcmd:
   - bash /tmp/bootstrap.sh
