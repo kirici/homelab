@@ -10,7 +10,7 @@ spec:
     chart: 'rook-ceph-cluster'
     targetRevision: 'v1.17.4'
   - repoURL: 'https://github.com/kirici/homelab.git'
-    targetRevision: 'master'
+    targetRevision: 'feat/rook-ceph-aio'
     path: 'argocd/resources/rook-ceph-aio'
     directory:
       recurse: true
