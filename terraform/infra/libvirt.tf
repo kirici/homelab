@@ -81,11 +81,3 @@ resource "libvirt_domain" "node" {
     autoport    = true
   }
 }
-
-# output "ips" {
-#   value = { for k, v in libvirt_domain.node : k => v.network_interface[0].addresses[0] }
-# }
-
-# output "ip" {
-#   value = libvirt_domain.node[element(keys(libvirt_domain.node), 0)].network_interface[0].addresses[0]
-# }
