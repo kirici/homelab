@@ -1,0 +1,27 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: metallb
+  namespace: argocd
+spec:
+  project: default
+  sources:
+  - repoURL: 'https://metallb.github.io/metallb'
+    targetRevision: '0.15.2'
+    chart: 'metallb'
+  - repoURL: 'https://github.com/kirici/homelab.git'
+    targetRevision: 'master'
+    path: 'argocd/resources/metallb'
+    directory:
+      recurse: true
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: metallb-system
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true
+      - ServerSideApply=false
+      - ApplyOutOfSyncOnly=true
