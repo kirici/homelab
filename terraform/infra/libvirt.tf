@@ -17,8 +17,8 @@ resource "libvirt_cloudinit_disk" "cloudinit" {
   pool      = "default"
 }
 
-resource "libvirt_network" "kubenet" {
-  name = var.domain
+resource "libvirt_network" "virtnet" {
+  name = "${var.vm_name}_net"
   mode = "nat"
   domain =var.domain
   addresses = ["10.10.10.0/24"]
@@ -49,9 +49,9 @@ resource "libvirt_volume" "domain_volume" {
 }
 
 resource "libvirt_domain" "node" {
-  for_each = toset(local.hostnames)
+  for_each = { for idx, name in local.hostnames : name => idx }
 
-  name       = each.value
+  name       = each.key
   memory     = var.memory
   vcpu       = var.cpu
   cloudinit  = libvirt_cloudinit_disk.cloudinit[each.key].id
@@ -62,7 +62,8 @@ resource "libvirt_domain" "node" {
   }
 
   network_interface {
-    network_name   = "default"
+    network_id = libvirt_network.virtnet.id
+    addresses  = ["${var.base_ip}.${each.value + 10}"]
     wait_for_lease = true
   }
 

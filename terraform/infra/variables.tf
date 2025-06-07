@@ -10,7 +10,12 @@ variable "vm_name" {
 
 variable "domain" {
   type    = string
-  default = "local"
+  default = "k8s.local"
+}
+
+variable "base_ip" {
+  type = string
+  default = "10.10.10"
 }
 
 variable "memory" {
