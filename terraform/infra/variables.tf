@@ -33,6 +33,11 @@ variable "disk_size" {
   default = 30 * 1024 * 1024 * 1024
 }
 
+variable "extra_disk_size" {
+  type    = number
+  default = 15 * 1024 * 1024 * 1024
+}
+
 variable "node_count" {
   type    = number
   default = 1

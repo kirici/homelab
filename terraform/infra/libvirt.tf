@@ -44,6 +44,15 @@ resource "libvirt_volume" "domain_volume" {
   size           = var.disk_size
 }
 
+resource "libvirt_volume" "block_volume" {
+  for_each = toset(local.hostnames)
+
+  name   = "${each.value}_block.qcow2"
+  pool   = "default"
+  format = "qcow2"
+  size   = var.extra_disk_size
+}
+
 resource "libvirt_domain" "node" {
   for_each = { for idx, name in local.hostnames : name => idx }
 
@@ -65,6 +74,14 @@ resource "libvirt_domain" "node" {
 
   disk {
     volume_id = libvirt_volume.domain_volume[each.key].id
+  }
+
+  disk {
+    volume_id = libvirt_volume.block_volume[each.key].id
+    # target {
+    #   dev = "vdb"
+    #   bus = "virtio"
+    # }
   }
 
   console {
