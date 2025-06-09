@@ -3,6 +3,10 @@ terraform {
     libvirt = {
       source = "dmacvicar/libvirt"
     }
+    cloudinit = {
+      source = "hashicorp/cloudinit"
+      version = "2.3.7"
+    }
   }
 }
 

@@ -1,20 +1,18 @@
-data "template_file" "user_data" {
-  for_each = toset(local.hostnames)
-
-  template = file("${path.module}/../resources/cloud-init.yaml")
-
-  vars = {
-    hostname = each.value
-    domain   = var.domain
+data "cloudinit_config" "init" {
+  gzip          = false
+  base64_encode = false
+  part {
+    content_type = "text/cloud-config"
+    content = file("${path.module}/../resources/cloud-init.yaml")
   }
 }
 
 resource "libvirt_cloudinit_disk" "cloudinit" {
-  for_each = toset(local.hostnames)
+  for_each = { for idx, name in local.hostnames : name => idx }
 
-  name      = "cloudinit-${each.key}.iso"
-  user_data = data.template_file.user_data[each.key].rendered
-  pool      = "default"
+  name = "cloudinit-${each.key}.iso"
+  pool = "default"
+  user_data = data.cloudinit_config.init.rendered
 }
 
 resource "libvirt_network" "virtnet" {
