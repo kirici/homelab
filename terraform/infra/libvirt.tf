@@ -1,9 +1,14 @@
 data "cloudinit_config" "init" {
+  for_each = { for idx, name in local.hostnames : name => idx }
+  
   gzip          = false
   base64_encode = false
   part {
     content_type = "text/cloud-config"
-    content      = file("${path.module}/../resources/cloud-init.yaml")
+    content = templatefile("${path.module}/../resources/cloud-init.yaml", {
+      hostname = each.key
+      domain   = var.domain
+    })
   }
 }
 
@@ -12,7 +17,7 @@ resource "libvirt_cloudinit_disk" "cloudinit" {
 
   name      = "cloudinit-${each.key}.iso"
   pool      = "default"
-  user_data = data.cloudinit_config.init.rendered
+  user_data = data.cloudinit_config.init[each.key].rendered
 }
 
 resource "libvirt_network" "virtnet" {
