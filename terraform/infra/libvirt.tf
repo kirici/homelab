@@ -3,22 +3,22 @@ data "cloudinit_config" "init" {
   base64_encode = false
   part {
     content_type = "text/cloud-config"
-    content = file("${path.module}/../resources/cloud-init.yaml")
+    content      = file("${path.module}/../resources/cloud-init.yaml")
   }
 }
 
 resource "libvirt_cloudinit_disk" "cloudinit" {
   for_each = { for idx, name in local.hostnames : name => idx }
 
-  name = "cloudinit-${each.key}.iso"
-  pool = "default"
+  name      = "cloudinit-${each.key}.iso"
+  pool      = "default"
   user_data = data.cloudinit_config.init.rendered
 }
 
 resource "libvirt_network" "virtnet" {
-  name = "${var.vm_name}_net"
-  mode = "nat"
-  domain =var.domain
+  name      = "${var.vm_name}_net"
+  mode      = "nat"
+  domain    = var.domain
   addresses = ["10.10.10.0/24"]
   dhcp {
     enabled = false
@@ -35,7 +35,7 @@ resource "libvirt_volume" "base_volume" {
 resource "libvirt_volume" "domain_volume" {
   for_each = toset(local.hostnames)
 
-  name   = "${each.value}_volume.qcow2"
+  name           = "${each.value}_volume.qcow2"
   base_volume_id = libvirt_volume.base_volume.id
   pool           = "default"
   format         = "qcow2"
@@ -65,8 +65,8 @@ resource "libvirt_domain" "node" {
   }
 
   network_interface {
-    network_id = libvirt_network.virtnet.id
-    addresses  = ["${var.base_ip}.${each.value + 10}"]
+    network_id     = libvirt_network.virtnet.id
+    addresses      = ["${var.base_ip}.${each.value + 10}"]
     wait_for_lease = true
   }
 

@@ -14,7 +14,7 @@ variable "domain" {
 }
 
 variable "base_ip" {
-  type = string
+  type    = string
   default = "10.10.10"
 }
 
