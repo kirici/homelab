@@ -13,6 +13,20 @@ an initial install of the application manifests in the `./argocd/` directory.
 
 ## Known issues
 
+##### libvirt storage pool
+
+An image storage pool is expected, if it is missing, run the following as root:
+
+```bash
+virsh pool-define-as default dir --target "/mnt/mypath/libvirt/images" \
+  && virsh pool-build default \
+  && virsh pool-start default \
+  && virsh pool-autostart default
+
+```
+
+##### networking
+
 Libvirt VMs may have issues using the bridge interface for internet access if
 Docker is installed. Edit `/etc/libvirt/network.conf` and set:
 ```ini
