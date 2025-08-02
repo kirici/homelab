@@ -16,6 +16,13 @@ output "network_name" {
   value       = libvirt_network.virtnet.name
 }
 
+output "hosts_entries" {
+  description = "Entries for /etc/hosts file"
+  value = join("\n", [
+    for name, domain in libvirt_domain.node :
+    "${domain.network_interface[0].addresses[0]} ${name}"
+  ])
+}
 
 output "k0s_hosts" {
   description = "Host information for k0sctl config"
@@ -27,6 +34,7 @@ output "k0s_hosts" {
     }
   ]
 }
+
 resource "local_file" "k0sctl_config" {
   content = templatefile("${path.module}/templates/k0sctl.yaml.tpl", {
     hosts = [
