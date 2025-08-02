@@ -71,8 +71,8 @@ variable "disk_size_gb" {
   default     = 30
 
   validation {
-    condition     = var.disk_size_gb >= 10
-    error_message = "Disk size must be at least 10 GB."
+    condition     = var.disk_size_gb >= 20
+    error_message = "Disk size must be at least 20 GB."
   }
 }
 
@@ -82,8 +82,8 @@ variable "extra_disk_size_gb" {
   default     = 15
 
   validation {
-    condition     = var.extra_disk_size_gb >= 1
-    error_message = "Extra disk size must be at least 1 GB."
+    condition     = var.extra_disk_size_gb >= 20
+    error_message = "Extra disk size must be at least 20 GB."
   }
 }
 
