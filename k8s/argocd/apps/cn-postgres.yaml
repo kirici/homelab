@@ -13,7 +13,7 @@ spec:
       releaseName: 'cnpg'
   - repoURL: 'https://github.com/kirici/homelab.git'
     targetRevision: 'master'
-    path: 'argocd/resources/cn-postgres'
+    path: 'k8s/argocd/resources/cn-postgres'
     directory:
       recurse: true
   destination:

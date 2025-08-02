@@ -14,7 +14,7 @@ spec:
         installCRDs: true
   - repoURL: 'https://github.com/kirici/homelab.git'
     targetRevision: 'master'
-    path: 'argocd/resources/certs'
+    path: 'k8s/argocd/resources/certs'
     directory:
       recurse: true
   destination:
