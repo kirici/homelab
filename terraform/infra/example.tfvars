@@ -1,7 +1,10 @@
-image_source = "../resources/AlmaLinux-9-GenericCloud-latest.x86_64.qcow2"
-domain       = "local"
-memory       = "4096"
-cpu          = 2
-disk_size    = 30 * 1024 * 1024 * 1024
-vm_name      = "node"
-node_count   = 3
+image_source        = "../resources/AlmaLinux-9-GenericCloud-latest.x86_64.qcow2"
+domain             = "local"
+memory             = 4096
+cpu                = 2
+disk_size_gb       = 30
+extra_disk_size_gb = 15
+vm_name            = "node"
+node_count         = 3
+network_cidr       = "10.10.10.0/24"
+storage_pool       = "default"
