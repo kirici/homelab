@@ -1,6 +1,6 @@
 data "cloudinit_config" "init" {
   for_each = { for idx, name in local.hostnames : name => idx }
-  
+
   gzip          = false
   base64_encode = false
   part {
@@ -25,7 +25,7 @@ resource "libvirt_network" "virtnet" {
   mode      = "nat"
   domain    = var.domain
   addresses = [var.network_cidr]
-  
+
   dhcp {
     enabled = false
   }

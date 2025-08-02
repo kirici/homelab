@@ -6,7 +6,7 @@ output "vm_names" {
 output "vm_ips" {
   description = "IP addresses of created VMs"
   value = {
-    for name, domain in libvirt_domain.node : 
+    for name, domain in libvirt_domain.node :
     name => domain.network_interface[0].addresses[0]
   }
 }
@@ -45,7 +45,7 @@ resource "local_file" "k0sctl_config" {
       }
     ]
   })
-  filename = "${path.module}/k0sctl.yaml"
+  filename        = "${path.module}/k0sctl.yaml"
   file_permission = "0644"
 }
 
