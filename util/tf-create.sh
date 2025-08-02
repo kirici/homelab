@@ -11,8 +11,9 @@ if [ "$id" != "0" ]; then
   exit
 fi
 
+pushd "${TF_PATH}"
 tofu \
-  -chdir="${TF_PATH}" \
   apply \
   -var-file=./example.tfvars \
   -auto-approve
+popd
