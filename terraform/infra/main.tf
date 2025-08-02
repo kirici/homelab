@@ -7,7 +7,7 @@ data "cloudinit_config" "init" {
     content_type = "text/cloud-config"
     content = templatefile(var.cloud_init_template, {
       hostname = each.key
-      fqdn     = "${each.key}.${var.domain}"
+      domain   = var.domain
     })
   }
 }
