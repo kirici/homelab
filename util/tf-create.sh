@@ -3,7 +3,7 @@ set -eu
 
 # Global vars
 SCRIPTPATH="$(dirname "$(realpath "$0")")"
-TF_PATH=$(realpath "${SCRIPTPATH}"/../terraform/infra)
+TF_PATH=$(realpath "${SCRIPTPATH}"/../infra)
 
 id="$(id -u)"
 if [ "$id" != "0" ]; then

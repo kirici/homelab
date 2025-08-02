@@ -107,5 +107,5 @@ variable "storage_pool" {
 variable "cloud_init_template" {
   description = "Path to cloud-init template file"
   type        = string
-  default     = "../resources/cloud-init.yaml"
+  default     = "resources/cloud-init.yaml"
 }
