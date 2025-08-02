@@ -46,6 +46,7 @@ resource "local_file" "k0sctl_config" {
     ]
   })
   filename = "${path.module}/k0sctl.yaml"
+  file_permission = "0644"
 }
 
 output "k0sctl_config_path" {
