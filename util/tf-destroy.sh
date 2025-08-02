@@ -7,13 +7,13 @@ TF_PATH=$(realpath "${SCRIPTPATH}"/../infra)
 
 id="$(id -u)"
 if [ "$id" != "0" ]; then
-  echo "Root required."
-  exit
+	echo "Root required."
+	exit
 fi
 
 pushd "${TF_PATH}"
 tofu \
-  destroy \
-  -var-file=./example.tfvars \
-  -auto-approve
+	destroy \
+	-var-file=./example.tfvars \
+	-auto-approve
 popd
