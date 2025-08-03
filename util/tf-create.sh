@@ -5,7 +5,7 @@ set -eu
 TF_PATH="${PROJECT_ROOT}"/infra
 
 id="$(id -u)"
-if [ "$id" != "0" ]; then
+if [[ "${id}" != "0" ]]; then
 	echo "Root required."
 	exit
 fi
