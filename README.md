@@ -10,12 +10,19 @@ Basic setup to get a working Kubernetes cluster incl. VMs using libvirt and terr
 Optional:
 
 - k0sctl
+- direnv
 
 ## Usage
 
 ### Bootstrapping the cluster
 
 Edit [example.tfvars](./infra/example.tfvars) and [cloud-init](./infra/resources/cloud-init.yaml) as needed.
+
+If you do not have direnv hooked into your shell, source the env file:
+
+```bash
+. .env.example
+```
 
 Then, run:
 
