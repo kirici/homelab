@@ -39,6 +39,9 @@ terraform.rc
 
 # End of https://www.toptal.com/developers/gitignore/api/terraform
 
+# general
+.env
+
 # k0s
 k0sctl.yaml
 k0s_backup_*.tar.gz
