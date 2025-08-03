@@ -75,6 +75,8 @@ Run
 sudo ./util/tf-destroy.sh
 ```
 
+Optionally, check and remove entries in `/etc/hosts` and `$HOME/.ssh/known_hosts`.
+
 ## Known issues
 
 #### libvirt storage pool
