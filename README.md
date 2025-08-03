@@ -20,7 +20,7 @@ Edit [example.tfvars](./infra/example.tfvars) and [cloud-init](./infra/resources
 Then, run:
 
 ```bash
-sudo ./util/tf-create.sh
+sudo -E ./util/tf-create.sh
 ```
 
 Optional: once finished, you can add the created VMs to your `/etc/hosts`:
@@ -72,7 +72,7 @@ and visit https://localhost:8080 - authenticate using `admin` and the output of
 Run 
 
 ```bash
-sudo ./util/tf-destroy.sh
+sudo -E ./util/tf-destroy.sh
 ```
 
 Optionally, check and remove entries in `/etc/hosts` and `$HOME/.ssh/known_hosts`.
