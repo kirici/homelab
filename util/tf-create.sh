@@ -2,8 +2,7 @@
 set -eu
 
 # Global vars
-SCRIPTPATH="$(dirname "$(realpath "$0")")"
-TF_PATH=$(realpath "${SCRIPTPATH}"/../infra)
+TF_PATH="${PROJECT_ROOT}"/infra
 
 id="$(id -u)"
 if [ "$id" != "0" ]; then
