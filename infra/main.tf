@@ -27,7 +27,7 @@ resource "libvirt_network" "virtnet" {
   addresses = [var.network_cidr]
 
   dhcp {
-    enabled = false
+    enabled = true
   }
 }
 
