@@ -39,13 +39,13 @@ tofu -chdir=infra output --raw hosts_entries | sudo tee -a /etc/hosts
 The previous apply step will also have created a ready-to-use Kubernetes cluster config for [k0sctl](https://github.com/k0sproject/k0sctl) that you may apply:
 
 ```bash
-k0sctl apply --config ./infra/k0sctl.yaml
+./util/k0sctl-apply.sh
 ```
 
 And grab the resulting kubeconfig like so:
 
 ```bash
-k0sctl kubeconfig --config ./infra/k0sctl.yaml [> ~/.kube/config]
+./util/k0sctl-kubeconfig.sh [> ~/.kube/config]
 ```
 
 ### Deploying applications
