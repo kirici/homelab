@@ -36,7 +36,7 @@ Optional: once finished, you can add the created VMs to your `/etc/hosts`:
 tofu -chdir=infra output --raw hosts_entries | sudo tee -a /etc/hosts
 ```
 
-The previous apply step will also have createc a ready-to-use Kubernetes cluster config for [k0sctl](https://github.com/k0sproject/k0sctl) that you may apply:
+The previous apply step will also have created a ready-to-use Kubernetes cluster config for [k0sctl](https://github.com/k0sproject/k0sctl) that you may apply:
 
 ```bash
 k0sctl apply --config ./infra/k0sctl.yaml
