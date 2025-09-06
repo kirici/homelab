@@ -6,6 +6,7 @@ provider "registry.opentofu.org/dmacvicar/libvirt" {
   constraints = "~> 0.8.1"
   hashes = [
     "h1:Tttxr3E9O75MM+dDmq5sYHQEw29PwtIj+XDj/5drdfE=",
+    "h1:h7F4ON38TMmy+8fAoYBaKDOFWv7ZVUnI0J+h7jSL2T8=",
     "zh:06ff0169beafd1891dc5a30616983abd32004a4f570d1d3dbb5851d84bd1c007",
     "zh:2dbdd726d0987cda73b56ecdfbcb98a67485e86a7a44aec976c0081b7239d89d",
     "zh:2e195a7bbdfcc13c45460571a5ba848a5c1e746b477c8381058767560f0ac93b",
@@ -27,6 +28,7 @@ provider "registry.opentofu.org/hashicorp/cloudinit" {
   version     = "2.3.7"
   constraints = "~> 2.3.7"
   hashes = [
+    "h1:El6cBCCiCPGwJsSSN0Z+EUWatjI45hie+kIDnTegV9A=",
     "h1:dkGeAxGbAGgglocp0fl1OzvT6O4KKsJTEsCW0ixdQJs=",
     "zh:2d48b8452eae9bac2e62273e8f535f73694d8cb05ea38f4b27ee735dcc38eed4",
     "zh:4add11b87e48d0e6ecd19243a06ecfc42fc07d0a3748fe568c2971d5f4767486",
@@ -42,8 +44,10 @@ provider "registry.opentofu.org/hashicorp/cloudinit" {
 }
 
 provider "registry.opentofu.org/hashicorp/local" {
-  version = "2.5.3"
+  version     = "2.5.3"
+  constraints = "~> 2.5.3"
   hashes = [
+    "h1:31Clmfoe7hzkcdgwuhUuGuPGfeG2Ksk+YWcJgzBTN7M=",
     "h1:mC9+u1eaUILTjxey6Ivyf/3djm//RNNze9kBVX/trng=",
     "zh:32e1d4b0595cea6cda4ca256195c162772ddff25594ab4008731a2ec7be230bf",
     "zh:48c390af0c87df994ec9796f04ec2582bcac581fb81ed6bb58e0671da1c17991",
