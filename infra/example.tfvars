@@ -1,3 +1,4 @@
+# libvirt_uri        = "qemu+ssh://myuser@myserver.local/system?keyfile=~/.ssh/mykey&sshauth=privkey"
 image_source       = "resources/AlmaLinux-9-GenericCloud-latest.x86_64.qcow2"
 domain             = "local"
 memory             = 4096
