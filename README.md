@@ -6,6 +6,7 @@ Basic setup to get a working Kubernetes cluster incl. VMs using libvirt and terr
 
 - libvirt
 - opentofu
+- mkisofs (homebrew: dvdrtools)
 
 Optional:
 
@@ -16,7 +17,9 @@ Optional:
 
 ### Bootstrapping the cluster
 
-Edit [example.tfvars](./infra/example.tfvars) and [cloud-init](./infra/resources/cloud-init.yaml) as needed.
+##### Prep
+
+Copy and/or edit the `example.tfvars` (in ./infra/) and `cloud-init` (in ./infra/resources/) files as needed.
 
 If you do not have direnv hooked into your shell, source the env file:
 
@@ -24,10 +27,24 @@ If you do not have direnv hooked into your shell, source the env file:
 . .env.example
 ```
 
-Then, run:
+To automatically install required provider plugins:
 
 ```bash
-sudo -E ./util/tf-create.sh
+tofu -chdir=infra init
+```
+
+If you do not want to get prompted by polkit, either run the next steps using `sudo -E` or add your user to the libvirt group:
+
+```bash
+sudo usermod -aG libvirt myuser
+```
+
+##### Provision the VM(s)
+
+Run:
+
+```bash
+tofu -chdir=infra apply -var-file=./example.tfvars
 ```
 
 Optional: once finished, you can add the created VMs to your `/etc/hosts`:
@@ -36,16 +53,18 @@ Optional: once finished, you can add the created VMs to your `/etc/hosts`:
 tofu -chdir=infra output --raw hosts_entries | sudo tee -a /etc/hosts
 ```
 
-The previous apply step will also have created a ready-to-use Kubernetes cluster config for [k0sctl](https://github.com/k0sproject/k0sctl) that you may apply:
+##### Create a Kubernetes cluster
+
+The previous steps will also have created a ready-to-use Kubernetes cluster config for [k0sctl](https://github.com/k0sproject/k0sctl) that you may apply:
 
 ```bash
-./util/k0sctl-apply.sh
+k0sctl apply --config infra/k0sctl.yaml
 ```
 
-And grab the resulting kubeconfig like so:
+To get the kubeconfig output:
 
 ```bash
-./util/k0sctl-kubeconfig.sh [> ~/.kube/config]
+k0sctl kubeconfig --config infra/k0sctl.yaml [> ~/.kube/config]
 ```
 
 ### Deploying applications
@@ -62,7 +81,7 @@ Add/edit/remove manifests as desired in `./k8s/argocd/`, then apply them:
 ./util/argocd-apply-apps.sh
 ```
 
-If you want to visit `ArgoCD`'s UI, you may also run:
+If you want to visit `ArgoCD`'s UI, run:
 
 ```bash
 ./util/argocd-portfwd.sh
@@ -79,7 +98,7 @@ and visit https://localhost:8080 - authenticate using `admin` and the output of
 Run 
 
 ```bash
-sudo -E ./util/tf-destroy.sh
+tofu -chdir=infra destroy -var-file=./example.tfvars  # or whatever .tfvars file you used to create the VMs
 ```
 
 Optionally, check and remove entries in `/etc/hosts` and `$HOME/.ssh/known_hosts`.
@@ -106,7 +125,7 @@ firewall_backend = "iptables"
 ```
 to fix this, or replace Docker with Podman. See [here for more infos](https://bbs.archlinux.org/viewtopic.php?pid=2178694#p2178694).
 
-#### k0sctl apply fails
+#### k0sctl apply fails due to ssh key mismatch
 
 ```log
 not connected: client connect: can't connect: ssh: handshake failed: host key mismatch: knownhosts: key mismatch
