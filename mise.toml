@@ -5,11 +5,14 @@ terragrunt = "latest"
 "github:kubermatic/kubeone" = "1.14"
 kubectl = "latest"
 helm = "latest"
-k9s = "latest"
 cilium-cli = "latest"
 jq = "latest"
 
 [env]
+LIBVIRT_DEFAULT_URI = "qemu:///system"
+# One shared provider download instead of one per unit; five units would otherwise fetch the same providers repeatedly.
+TG_PROVIDER_CACHE = "1"
+TG_TF_PATH = "tofu"
 # Read by live/homelab/cluster.hcl. Override per machine without touching the repo.
 K8S_SSH_KEY = "{{ env.HOME }}/.ssh/id_ed25519"
 K8S_SSH_PUBKEY = "{{ env.HOME }}/.ssh/id_ed25519.pub"
