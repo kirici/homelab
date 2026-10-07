@@ -60,9 +60,12 @@ kubeone apply \
 [tasks."cluster:post-install"]
 description = "Gateway API CRDs, then LB IP pool and L2 announcements"
 shell = "bash -c"
+# Once kubeone deploys Cilium v1.20, use gateway api v1.6.1 and drop the second apply
 run = '''
 kubectl apply --server-side \
   --filename https://github.com/kubernetes-sigs/gateway-api/releases/download/v1.4.1/standard-install.yaml \
+  && kubectl apply --server-side \
+    --filename https://raw.githubusercontent.com/kubernetes-sigs/gateway-api/v1.4.1/config/crd/experimental/gateway.networking.k8s.io_tlsroutes.yaml \
   && kubectl --namespace kube-system rollout restart deployment/cilium-operator \
   && kubectl --namespace kube-system rollout status deployment/cilium-operator \
   && kubectl apply --filename kubeone/manifests/cilium-lb-ipam.yaml
