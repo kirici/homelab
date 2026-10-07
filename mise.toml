@@ -62,7 +62,7 @@ description = "Gateway API CRDs, then LB IP pool and L2 announcements"
 shell = "bash -c"
 run = '''
 kubectl apply --server-side \
-  --filename https://github.com/kubernetes-sigs/gateway-api/releases/download/v1.5.1/standard-install.yaml \
+  --filename https://github.com/kubernetes-sigs/gateway-api/releases/download/v1.4.1/standard-install.yaml \
   && kubectl --namespace kube-system rollout restart deployment/cilium-operator \
   && kubectl --namespace kube-system rollout status deployment/cilium-operator \
   && kubectl apply --filename kubeone/manifests/cilium-lb-ipam.yaml
