@@ -22,7 +22,7 @@ clusterNetwork:
 
   cni:
     cilium:
-      kubeProxyReplacement: true
+      kubeProxyReplacement: "strict"
       # Gateway API also needs its CRDs on the cluster; `mise run cluster:post-install` applies them.
       enableGatewayAPI: true
       enableHubble: true
