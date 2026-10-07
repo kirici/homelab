@@ -5,7 +5,7 @@ kind: KubeOneCluster
 name: homelab
 
 versions:
-  kubernetes: "v1.35.0"
+  kubernetes: "v1.36.4"
 
 # No cloud controller: libvirt has none, and Cilium L2 announcements cover LoadBalancer services.
 cloudProvider:
