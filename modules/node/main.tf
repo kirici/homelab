@@ -125,7 +125,9 @@ resource "libvirt_domain" "this" {
 
   os = {
     type         = "hvm"
-    boot_devices = ["hd"]
+    boot_devices = [
+      { dev = "hd" },
+    ]
   }
 
   features = {
