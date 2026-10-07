@@ -3,6 +3,12 @@ include "root" {
   expose = true
 }
 
+generate "provider" {
+  path      = "provider.tf"
+  if_exists = "overwrite_terragrunt"
+  contents  = include.root.locals.libvirt_provider
+}
+
 terraform {
   source = "${get_parent_terragrunt_dir("root")}/modules//image"
 }

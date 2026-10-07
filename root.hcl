@@ -5,6 +5,14 @@ terraform_binary = "tofu"
 
 locals {
   cluster = read_terragrunt_config(find_in_parent_folders("cluster.hcl")).locals
+
+  # Only units that talk to libvirt use this. Generating it everywhere would make tofu look for a
+  # hashicorp/libvirt provider in modules that don't declare one.
+  libvirt_provider = <<-EOT
+    provider "libvirt" {
+      uri = "${local.cluster.libvirt_uri}"
+    }
+  EOT
 }
 
 remote_state {
@@ -18,16 +26,4 @@ remote_state {
   config = {
     path = "${get_parent_terragrunt_dir()}/.state/${path_relative_to_include()}/terraform.tfstate"
   }
-}
-
-# Every unit talks to the same hypervisor, so the provider block lives here and the modules only
-# declare the provider requirement.
-generate "provider" {
-  path      = "provider.tf"
-  if_exists = "overwrite_terragrunt"
-  contents  = <<-EOT
-    provider "libvirt" {
-      uri = "${local.cluster.libvirt_uri}"
-    }
-  EOT
 }
