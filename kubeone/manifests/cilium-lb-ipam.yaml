@@ -1,0 +1,25 @@
+# Applied after the cluster is up because these CRDs only appear once the Cilium operator has started.
+# If apply complains about an unknown apiVersion, check `kubectl api-resources | grep -i cilium.io`:
+# these kinds moved between v2alpha1 and v2 across Cilium releases.
+apiVersion: cilium.io/v2
+kind: CiliumLoadBalancerIPPool
+metadata:
+  name: homelab
+spec:
+  blocks:
+    - start: "10.5.0.200"
+      stop: "10.5.0.250"
+---
+apiVersion: cilium.io/v2alpha1
+kind: CiliumL2AnnouncementPolicy
+metadata:
+  name: homelab
+spec:
+  loadBalancerIPs: true
+  # Announce from workers only, so the control plane stays out of the data path.
+  nodeSelector:
+    matchExpressions:
+      - key: node-role.kubernetes.io/control-plane
+        operator: DoesNotExist
+  interfaces:
+    - ^en.*
